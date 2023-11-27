@@ -22,7 +22,8 @@
 #' @importFrom scalop unique_sample_names hms_span comply
 findMalignant = function(cna,
                          refCells = NULL,
-                         samples = scalop::unique_sample_names(colnames(cna), max.nchar = 6),
+                         samples = NULL,
+                         #samples = scalop::unique_sample_names(colnames(cna), max.nchar = 6),
                          gene.quantile = 0.9,
                          gene.quantile.for.corr = 0.5,
                          gene.quantile.for.signal = gene.quantile,
@@ -48,7 +49,7 @@ findMalignant = function(cna,
     }
 
     old <- Sys.time()
-    invisible(capture.output(corGroups <- suppressMessages(fitBimodal(cors,
+    invisible(capture.output(corGroups <- suppressMessages(infercna::fitBimodal(cors,
                                                                       bySampling = use.bootstraps,
                                                                       nsamp = n.bootstraps,
                                                                       prob = prob,
@@ -68,7 +69,7 @@ findMalignant = function(cna,
     }
 
     old <- Sys.time()
-    invisible(capture.output(sigGroups <- suppressMessages(fitBimodal(signals,
+    invisible(capture.output(sigGroups <- suppressMessages(infercna::fitBimodal(signals,
                                                                       bySampling = use.bootstraps,
                                                                       nsamp = n.bootstraps,
                                                                       prob = prob,
